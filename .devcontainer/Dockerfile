@@ -12,6 +12,11 @@ ENV TIMEZONE=${timezone:-"America/Sao_Paulo"} \
     SCAN_CACHEABLE=(false)
 
 # Instala dependências adicionais + Xdebug
+RUN curl -O https://pear.php.net/go-pear.phar \
+    && php go-pear.phar \
+    && ln -s /usr/bin/pear /usr/local/bin/pear \
+    && ln -s /usr/bin/pecl /usr/local/bin/pecl
+
 RUN set -ex \
     && apk update \
     && apk add --no-cache $PHPIZE_DEPS curl \
