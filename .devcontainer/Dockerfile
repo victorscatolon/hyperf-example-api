@@ -15,10 +15,8 @@ RUN set -ex \
     php83-pear \
     linux-headers \
     curl \
-    # Garante que pecl esteja no path
-    && ln -sf /usr/bin/pecl-php8 /usr/local/bin/pecl \
-    && ln -sf /usr/bin/phpize8 /usr/local/bin/phpize \
-    \
+    && ln -sf /usr/bin/pecl83 /usr/local/bin/pecl \
+    && ln -sf /usr/bin/phpize83 /usr/local/bin/phpize \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     \
