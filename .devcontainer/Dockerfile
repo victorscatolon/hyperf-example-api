@@ -19,16 +19,16 @@ RUN set -ex \
     && ln -sf /usr/bin/phpize83 /usr/local/bin/phpize \
     && pecl install xdebug \
     \
-    && echo "zend_extension=$(find /usr/lib/php*/modules/ -name xdebug.so)" > /etc/php8/conf.d/50_xdebug.ini \
-    && echo "xdebug.mode=debug" >> /etc/php8/conf.d/50_xdebug.ini \
-    && echo "xdebug.start_with_request=yes" >> /etc/php8/conf.d/50_xdebug.ini \
-    && echo "xdebug.discover_client_host=true" >> /etc/php8/conf.d/50_xdebug.ini \
-    && echo "xdebug.client_port=9003" >> /etc/php8/conf.d/50_xdebug.ini \
+    && echo "zend_extension=$(find /usr/lib/php*/modules/ -name xdebug.so)" > /etc/php83/conf.d/50_xdebug.ini \
+    && echo "xdebug.mode=debug" >> /etc/php83/conf.d/50_xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /etc/php83/conf.d/50_xdebug.ini \
+    && echo "xdebug.discover_client_host=true" >> /etc/php83/conf.d/50_xdebug.ini \
+    && echo "xdebug.client_port=9003" >> /etc/php83/conf.d/50_xdebug.ini \
     \
-    && echo "upload_max_filesize=128M" >> /etc/php8/conf.d/99_overrides.ini \
-    && echo "post_max_size=128M" >> /etc/php8/conf.d/99_overrides.ini \
-    && echo "memory_limit=2G" >> /etc/php8/conf.d/99_overrides.ini \
-    && echo "date.timezone=${TIMEZONE}" >> /etc/php8/conf.d/99_overrides.ini \
+    && echo "upload_max_filesize=128M" >> /etc/php83/conf.d/99_overrides.ini \
+    && echo "post_max_size=128M" >> /etc/php83/conf.d/99_overrides.ini \
+    && echo "memory_limit=2G" >> /etc/php83/conf.d/99_overrides.ini \
+    && echo "date.timezone=${TIMEZONE}" >> /etc/php83/conf.d/99_overrides.ini \
     \
     && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
     && echo "${TIMEZONE}" > /etc/timezone \
