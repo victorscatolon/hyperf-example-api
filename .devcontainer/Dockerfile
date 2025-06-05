@@ -18,9 +18,8 @@ RUN set -ex \
     && ln -sf /usr/bin/pecl83 /usr/local/bin/pecl \
     && ln -sf /usr/bin/phpize83 /usr/local/bin/phpize \
     && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
     \
-    && echo "zend_extension=xdebug.so" >> /etc/php8/conf.d/50_xdebug.ini \
+    && echo "zend_extension=$(find /usr/lib/php*/modules/ -name xdebug.so)" > /etc/php8/conf.d/50_xdebug.ini \
     && echo "xdebug.mode=debug" >> /etc/php8/conf.d/50_xdebug.ini \
     && echo "xdebug.start_with_request=yes" >> /etc/php8/conf.d/50_xdebug.ini \
     && echo "xdebug.discover_client_host=true" >> /etc/php8/conf.d/50_xdebug.ini \
