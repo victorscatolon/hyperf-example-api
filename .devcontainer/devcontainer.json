@@ -1,0 +1,14 @@
+{
+  "name": "Hyperf + MySQL + Redis + Xdebug",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/opt/www",
+  "appPort": [9501],
+  "forwardPorts": [9501, 9003, 3306, 6379],
+  "customizations": {
+    "vscode": {
+      "extensions": ["xdebug.php-debug", "bmewburn.vscode-intelephense-client"]
+    }
+  },
+  "postCreateCommand": "composer install"
+}
