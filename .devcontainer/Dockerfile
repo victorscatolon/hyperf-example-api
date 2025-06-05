@@ -1,25 +1,25 @@
-# Dev Container Dockerfile - adaptado com Xdebug para GitHub Codespaces
+# Dev Container Dockerfile - Hyperf + Xdebug + Codespaces
 
 FROM hyperf/hyperf:8.3-alpine-v3.19-swoole
 LABEL maintainer="Hyperf Developers <group@hyperf.io>" version="1.0" license="MIT" app.name="Hyperf"
 
-##
 # ---------- env settings ----------
-##
 ARG timezone
 ENV TIMEZONE=${timezone:-"America/Sao_Paulo"} \
     APP_ENV=dev \
     SCAN_CACHEABLE=(false)
 
-# Instala dependências adicionais + Xdebug
-RUN curl -O https://pear.php.net/go-pear.phar \
-    && php go-pear.phar \
-    && ln -s /usr/bin/pear /usr/local/bin/pear \
-    && ln -s /usr/bin/pecl /usr/local/bin/pecl
-
+# Instala dependências + Xdebug
 RUN set -ex \
     && apk update \
-    && apk add --no-cache $PHPIZE_DEPS curl \
+    && apk add --no-cache \
+    autoconf \
+    g++ \
+    make \
+    php83-dev \
+    php83-pear \
+    linux-headers \
+    curl \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     \
@@ -31,12 +31,10 @@ RUN set -ex \
     && echo "xdebug.client_port=9003" >> /etc/php8/conf.d/50_xdebug.ini \
     \
     # Configurações PHP gerais
-    && { \
-    echo "upload_max_filesize=128M"; \
-    echo "post_max_size=128M"; \
-    echo "memory_limit=1G"; \
-    echo "date.timezone=${TIMEZONE}"; \
-    } | tee /etc/php8/conf.d/99_overrides.ini \
+    && echo "upload_max_filesize=128M" >> /etc/php8/conf.d/99_overrides.ini \
+    && echo "post_max_size=128M" >> /etc/php8/conf.d/99_overrides.ini \
+    && echo "memory_limit=1G" >> /etc/php8/conf.d/99_overrides.ini \
+    && echo "date.timezone=${TIMEZONE}" >> /etc/php8/conf.d/99_overrides.ini \
     \
     # Timezone do sistema
     && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime \
